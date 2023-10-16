@@ -8,8 +8,8 @@ class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     img = db.Column(db.String(100))
-    nbEpisode = db.Column(db.Integer(100))
-    dateS = db.Column(db.String(100))
+    nbEpisode = db.Column(db.Integer)
+    dateS = db.Column(db.String)
     author_id = db.Column(db.Integer,db.ForeignKey("author.id"))
     author = db.relationship("Author", backref=db.backref("animes", lazy="dynamic"))
 

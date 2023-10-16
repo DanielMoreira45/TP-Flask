@@ -7,8 +7,8 @@ def loaddb(filename):
     '''Creates the tables and populates them with data.'''
     # création de toutes les tables
     db.create_all()
-    from .models import Author, Anime
     import yaml
+    from .models import Author, Anime
     Animes = yaml.load(open(filename))
     # première passe: création de tous les auteurs
     authors = {}
