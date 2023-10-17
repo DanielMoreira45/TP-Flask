@@ -1,16 +1,15 @@
-<!doctype html>
-<html>
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-</head>
-<body>
-    <h1>{{ title }}</h1>
-    <ul>
-        {% for x in names %}
-        <li>{{ x }}</li>
-        {% endfor %}
-    </ul>
-</body>
-
-</html>
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
+<h1>{{title}}</h1>
+<div class="sample">
+    {% for x in animes %}
+    <a href="{{url_for('home', id=x.id)}}">
+        <img id="images" src="{{ url_for('static', filename='img/'+x.img) }}" alt="{{x.title}}" title="{{x.title}}">
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
