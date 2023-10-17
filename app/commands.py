@@ -9,7 +9,7 @@ def loaddb(filename):
     db.create_all()
     import yaml
     from .models import Author, Anime
-    Animes = yaml.load(open(filename))
+    Animes = yaml.safe_load(open(filename))
     # première passe: création de tous les auteurs
     authors = {}
     for b in Animes:
@@ -25,7 +25,7 @@ def loaddb(filename):
         o = Anime(title = b["title"],
                    img = b["img"],
                    nbEpisode = b["nbEpisodes"],
-                   dateS= ["datesSortie"],
+                   dateS= b["datesSortie"],
                    author_id = a.id)
         db.session.add(o)
     db.session.commit()
