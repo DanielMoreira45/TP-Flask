@@ -1,3 +1,22 @@
+import yaml, os.path
+
+Anime = yaml.safe_load(
+    open(
+        os.path.join(
+            os.path.dirname(__file__),
+            "anime.yml"
+            )
+        )
+    )
+# Pour avoir un id
+i = 0
+for anime in Anime:
+    anime['id'] = i
+    i += 1
+
+def get_sample():
+    return Anime[0:10]
+  
 from .app import db
 
 class Author(db.Model):
@@ -19,5 +38,5 @@ class Anime(db.Model):
     def __repr__(self):
         return "<Book (%d) %s>"% (self.id, self.title)
 
-def get_sample():
+def get_sample2():
     return Anime.query.limit(10).all()

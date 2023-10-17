@@ -1,6 +1,11 @@
 from .app import app
 from flask import render_template
 from .models import get_sample
+
 @app.route("/")
 def home():
-    return render_template("home.html",animes=get_sample())
+    return render_template(
+        "home.html", 
+        title="My Anime !", 
+        animes=get_sample()
+    )
