@@ -5,12 +5,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
-    <h1>{{ title }}</h1>
-    <ul>
-        {% for x in names %}
-        <li>{{ x }}</li>
-        {% endfor %}
-    </ul>
+    <h1>{{title}}</h1>
+    <div class="sample">
+    {% for x in animes %}
+    <img src="{{ url_for('static', filename='img/'+x.img) }}" alt="{{x.title}}" title="{{x.title}}">
+    {% endfor %}
+</div>
 </body>
 
 </html>
