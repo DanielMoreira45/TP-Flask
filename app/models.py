@@ -40,3 +40,6 @@ class Anime(db.Model):
 
 def get_sample2():
     return Anime.query.limit(10).all()
+
+def get_auteur(id):
+    return Author.query.get(id)

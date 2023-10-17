@@ -11,3 +11,5 @@ def mkpath(p):
     return os.path.normpath(os.path.join(os.path.dirname(__file__ ),p))
 app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../myapp.db'))
 db = SQLAlchemy(app)
+
+app.config['SECRET_KEY'] = '3111990a-e74c-4366-8f1e-77c770304a87'
