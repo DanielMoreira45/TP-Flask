@@ -1,5 +1,5 @@
 import yaml, os.path
-from .app import db
+from .app import db, login_manager
 from flask_login import UserMixin
 
 Anime = yaml.safe_load(
