@@ -58,3 +58,10 @@ def get_sample2():
 
 def get_auteur(id):
     return Author.query.get(id)
+
+def get_anime(id):
+    return Anime.query.get(id)
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(username)
