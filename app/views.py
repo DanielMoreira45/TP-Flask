@@ -1,9 +1,9 @@
 from .app import app, db
 from .models import get_sample, get_sample2, get_auteur, User
 
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, login_required
 
 from wtforms import StringField, HiddenField, PasswordField
 from wtforms.validators import DataRequired
@@ -16,6 +16,7 @@ class AuthorFrom(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField('Username')
     password = PasswordField('Password')
+    next = HiddenField()
 
     def get_authenticated_user(self):
         user = User.query.get(self.username.data)
@@ -35,6 +36,7 @@ def home():
     )
 
 @app.route("/edit/author/<int:id>")
+@login_required
 def edit_author(id):
     a = get_auteur(id)
     f = AuthorFrom(id =a.id,name=a.name)
@@ -56,11 +58,14 @@ def save_author():
 @app.route("/login/", methods = ("GET","POST",))
 def login():
     f = LoginForm()
-    if f.validate_on_submit():
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    elif f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
-            return redirect(url_for("home"))
+            next = f.next.data or url_for("home")
+            return redirect(next)
     return render_template("login.html", form=f)
 
 @app.route("/logout/")
