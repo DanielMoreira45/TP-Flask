@@ -1,4 +1,5 @@
 import yaml, os.path
+from .app import db
 from flask_login import UserMixin
 
 Anime = yaml.safe_load(
