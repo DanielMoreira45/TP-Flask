@@ -55,6 +55,12 @@ def home():
         animes=get_sample2()
     )
 
+@app.route("/detail/<id>")
+def detail(id):
+    animes = get_sample2()
+    anime = animes[int(id)-1]
+    return render_template("detail.html",anime=anime)
+
 @app.route("/edit/author/<int:id>")
 @login_required
 def edit_author(id):

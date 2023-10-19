@@ -1,26 +1,44 @@
-h1 {color: red;}
+h1 {
+    color: red;
+    text-align: center;}
 
 div.sample{
  text-align: center;
- margin-left: 25%;
- margin-right: 25%;
+ margin-left: 30%;
+ margin-right: 30%;
+ 
+ background-color: aliceblue;
+ background-size: 10%;
 }
+
 
 main{
  margin-top: 8em;
 }
 
 footer{
- position: fixed;
- bottom: 0;
- width: 100%;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 10px;
+    font-size: 14px;    
 }
 
 main > .container {
- padding: 60px 15px 0;
+ padding: 20px 15px 0;
 }
 
 #images{
-    width: 25%;
-    height: 25%;
+    max-width: 40vw;
+    max-height: 40vh;
+    margin: 3px;
+}
+
+li, ul{
+    list-style: none;
+}
+
+body{
+    background-image: url("../img/fond.jpg");
+    background-size: cover;
 }

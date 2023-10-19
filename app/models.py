@@ -30,7 +30,7 @@ class Author(db.Model):
         return self.id
     
     def __repr__(self):
-        return "<Author (%d) %s>" % (self.id, self.name)
+        return self.name
 
 class Anime(db.Model):
     __tablename__ = 'anime'
@@ -39,6 +39,7 @@ class Anime(db.Model):
     img = db.Column(db.String(100))
     nbEpisode = db.Column(db.Integer())
     dateS = db.Column(db.String(100))
+    illustrator = db.Column(db.String(100))
     author_id = db.Column(db.Integer,db.ForeignKey("author.id"))
     author = db.relationship("Author", backref=db.backref("animes", lazy="dynamic"))
     
@@ -57,7 +58,7 @@ class User(db.Model, UserMixin):
         return self.username
 
 def get_sample2():
-    return Anime.query.limit(10).all()
+    return Anime.query.limit(12).all()
 
 def get_auteur(id):
     return Author.query.get(id)

@@ -8,7 +8,7 @@
 <h1>{{title}}</h1>
 <div class="sample">
     {% for x in animes %}
-    <a href="{{url_for('home', id=x.id)}}">
+    <a href="{{url_for('detail', id=x.id)}}">
         <img id="images" src="{{ url_for('static', filename='img/'+x.img) }}" alt="{{x.title}}" title="{{x.title}}">
     </a>
     {% endfor %}
