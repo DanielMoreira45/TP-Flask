@@ -30,3 +30,25 @@ Pour ce projet nous avions a implémenter un site web en flask, pour ce faire no
   Lors de sa consultation, il peut voir la totalité des animés (seulement les images) ou bien regarder spécifiquement un animé. Lorsqu'il regarde plus en détail il peut swiper d'un animé à un autre.
 
   Une fois connecté il aura la possibilité de pouvoir modifier les informations de l'auteur d'une oeuvre.
+
+
+## Les nécessaires de lancement
+
+Pour pouvoir lancer le site, il y a plusieurs pré-requis, les voici :
+- il faut avoir créer un virtual environment dont voici les commandes:
+  - virtualenv venv
+- une fois cela fait, il faut l'activer:
+  - sous linux: source venv/bin/activate
+  - sous windows: source venv/Scripts/activate
+- ensuite, il faut installer tout le nécessaire avec pip install dont:
+  - flask
+  - python-dotenv
+  - flask-sqlalchemy
+  - bootstrap-flask
+  - flask-wtf
+  - pyYAML
+  - werkzeug==2.3.7
+  - flask-login
+- Ensuite, il faut entrer la commande pour créer la bd:
+  - flask loaddb anime.yml
+- Une fois cela fait, il suffit d'entrer la commande flask run et de se rendre à l'adresse indiqué
