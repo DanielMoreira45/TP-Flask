@@ -1,4 +1,6 @@
 import yaml, os.path
+from .app import db, login_manager
+from flask_login import UserMixin
 
 Anime = yaml.safe_load(
     open(
@@ -20,13 +22,18 @@ def get_sample():
 from .app import db
 
 class Author(db.Model):
+    __tablename__ = 'author'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
 
+    def get_id(self):
+        return self.id
+    
     def __repr__(self):
         return self.name
 
 class Anime(db.Model):
+    __tablename__ = 'anime'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     img = db.Column(db.String(100))
@@ -35,9 +42,33 @@ class Anime(db.Model):
     illustrator = db.Column(db.String(100))
     author_id = db.Column(db.Integer,db.ForeignKey("author.id"))
     author = db.relationship("Author", backref=db.backref("animes", lazy="dynamic"))
-
+    
+    def get_id(self):
+        return self.id
+    
     def __repr__(self):
-        return "<Book (%d) %s>"% (self.id, self.title)
+        return "<Anime (%d) %s>"% (self.id, self.title)
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+    username = db.Column(db.String(50), primary_key=True)
+    password = db.Column(db.String(64))
+
+    def get_id(self):
+        return self.username
 
 def get_sample2():
     return Anime.query.limit(12).all()
+
+def get_auteur(id):
+    return Author.query.get(id)
+
+def get_anime(id):
+    return Anime.query.get(id)
+
+def get_User(username):
+    return User.query.get(username)
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(username)
