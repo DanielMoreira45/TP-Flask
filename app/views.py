@@ -1,5 +1,5 @@
 from .app import app, db
-from .models import get_sample, get_sample2, get_auteur, User
+from .models import get_sample, get_sample2, get_auteur, get_User, User
 
 from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm
@@ -26,6 +26,26 @@ class LoginForm(FlaskForm):
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
         return user if passwd == user.password else None
+
+class InscriptionForm(FlaskForm):
+    username = StringField('Username')
+    password = PasswordField('Password')
+    next = HiddenField()
+
+    def create_user(self):
+        m = sha256()
+        m.update(self.password.data.encode())
+        user = User(username=self.username.data, password=m.hexdigest())
+        if user is None:
+            return None
+        existing_user = User.query.filter_by(username=self.username.data).first()
+        if existing_user:
+            return None
+        else:
+            db.session.add(user)
+            db.session.commit()
+
+    
 
 @app.route("/")
 def home():
@@ -72,3 +92,13 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+@app.route("/inscription/", methods = ("GET","POST",))
+def inscription():
+    f = InscriptionForm()
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    elif f.validate_on_submit():
+        f.create_user()
+        return redirect(url_for("login"))
+    return render_template("inscription.html", form=f)
