@@ -2,7 +2,7 @@ h1 {
     color: red;
     text-align: center;}
 
-div.sample{
+div.sample, div.co{
  text-align: center;
  margin-left: 30%;
  margin-right: 30%;
@@ -11,16 +11,21 @@ div.sample{
  background-size: 10%;
 }
 
+.form-control, .btn-default{
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+}
 
 main{
  margin-top: 8em;
+ margin-bottom: 2em;
 }
 
 footer{
-    position: fixed;
+    position:fixed;
     width: 100%;
     bottom: 0;
-    padding: 10px;
     font-size: 14px;    
 }
 
