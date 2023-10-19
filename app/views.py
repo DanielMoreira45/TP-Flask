@@ -1,5 +1,5 @@
 from .app import app, db
-from .models import get_sample, get_sample2, get_auteur, get_User, User
+from .models import get_sample2, get_auteur, get_User, User
 
 from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm

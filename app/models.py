@@ -15,9 +15,6 @@ i = 0
 for anime in Anime:
     anime['id'] = i
     i += 1
-
-def get_sample():
-    return Anime[0:10]
   
 from .app import db
 
