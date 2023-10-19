@@ -1,12 +1,15 @@
+import os.path
+
 from .app import app, db
-from .models import get_sample, get_sample2, get_auteur, get_User, User
+from .models import get_sample, get_sample2, get_auteur, get_User, User, Author, Anime
 
 from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, login_required
 
-from wtforms import StringField, HiddenField, PasswordField
+from wtforms import StringField, HiddenField, PasswordField, DateField, FileField, IntegerField
 from wtforms.validators import DataRequired
+from werkzeug.utils import secure_filename
 from hashlib import sha256
 
 class AuthorFrom(FlaskForm):
@@ -45,7 +48,15 @@ class InscriptionForm(FlaskForm):
             db.session.add(user)
             db.session.commit()
 
-    
+class UploadAnimeForm(FlaskForm):
+    auteur = StringField('Auteur')
+    illustrateur = StringField('Illustrateur')
+    nb_episodes = IntegerField('Nombre d\'épisodes')
+    titre = StringField('Titre')
+    date_debut = DateField('Date de début', format='%Y')
+    date_fin = DateField('Date de fin', format='%Y')
+    image = FileField('Imagede l\'anime')
+
 
 @app.route("/")
 def home():
@@ -108,3 +119,37 @@ def inscription():
         f.create_user()
         return redirect(url_for("login"))
     return render_template("inscription.html", form=f)
+
+@app.route('/upload/', methods = ("GET","POST",))
+def upload_file():
+    f = UploadAnimeForm()
+    if f.validate_on_submit():
+        auteur = f.auteur.data
+        illustrateur = f.illustrateur.data
+        nb_episodes = f.nb_episodes.data
+        titre = f.titre.data
+        date_debut = f.date_debut.data
+        date_fin = f.date_fin.data
+
+        # Gérer le téléchargement de fichiers
+        print("1")
+        if 'image' in request.files:
+            print("2")
+            image = request.files['image']
+            print("3")
+            if image:
+                filename = secure_filename(image.filename)
+                file_path = os.path.join('static', 'img', filename)
+                print(file_path)
+                image.save(file_path)
+                dateS = date_debut+" - "+date_fin
+                author = Author(name=auteur)
+                anime = Anime(title=titre,img=file_path,nbEpisode=nb_episodes,dateS=dateS,illustrator=illustrateur,author_id=author.get_id())
+                db.session.add(author)
+                db.session.add(anime)
+                db.session.commit()
+
+
+        return redirect(url_for('home'))
+
+    return render_template('anime_form.html', form=f)

@@ -17,10 +17,8 @@ for anime in Anime:
     i += 1
 
 def get_sample():
-    return Anime[0:10]
+    return Anime[0:15]
   
-from .app import db
-
 class Author(db.Model):
     __tablename__ = 'author'
     id = db.Column(db.Integer, primary_key=True)
