@@ -56,7 +56,7 @@ class User(db.Model, UserMixin):
         return self.username
 
 def get_sample2():
-    return Anime.query.limit(12).all()
+    return Anime.query.limit(15).all()
 
 def get_auteur(id):
     return Author.query.get(id)

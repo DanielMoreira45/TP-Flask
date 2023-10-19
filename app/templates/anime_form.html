@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Upload File to Server</title>
-    <style>
-        #drop-area {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <h1>Upload File to Server</h1>
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
     <form method="POST" enctype="multipart/form-data">  <!-- Ajoutez l'attribut enctype pour prendre en charge les fichiers -->
         {{ form.hidden_tag() }}
         <p>{{ form.auteur.label }} {{ form.auteur() }}</p>
@@ -46,5 +38,5 @@
             fileInput.files = fileList;
         });
     </script>
-</body>
-</html>
+{% endblock %}
+

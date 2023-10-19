@@ -7,7 +7,7 @@ from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, login_required
 
-from wtforms import StringField, HiddenField, PasswordField, DateField, FileField, IntegerField
+from wtforms import StringField, HiddenField, PasswordField, SelectField, FileField, IntegerField
 from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename
 from hashlib import sha256
@@ -53,8 +53,8 @@ class UploadAnimeForm(FlaskForm):
     illustrateur = StringField('Illustrateur')
     nb_episodes = IntegerField('Nombre d\'épisodes')
     titre = StringField('Titre')
-    date_debut = DateField('Date de début', format='%Y')
-    date_fin = DateField('Date de fin', format='%Y')
+    date_debut = SelectField('Date de début', choices=[(str(year), str(year)) for year in range(1950, 2023)])
+    date_fin = SelectField('Date de fin', choices=[(str(year), str(year)) for year in range(1950, 2023)])
     image = FileField('Imagede l\'anime')
 
 
@@ -123,6 +123,7 @@ def inscription():
 @app.route('/upload/', methods = ("GET","POST",))
 def upload_file():
     f = UploadAnimeForm()
+    print(f.validate_on_submit())
     if f.validate_on_submit():
         auteur = f.auteur.data
         illustrateur = f.illustrateur.data
@@ -131,25 +132,29 @@ def upload_file():
         date_debut = f.date_debut.data
         date_fin = f.date_fin.data
 
-        # Gérer le téléchargement de fichiers
-        print("1")
         if 'image' in request.files:
-            print("2")
             image = request.files['image']
-            print("3")
             if image:
                 filename = secure_filename(image.filename)
                 file_path = os.path.join('static', 'img', filename)
-                print(file_path)
                 image.save(file_path)
                 dateS = date_debut+" - "+date_fin
                 author = Author(name=auteur)
-                anime = Anime(title=titre,img=file_path,nbEpisode=nb_episodes,dateS=dateS,illustrator=illustrateur,author_id=author.get_id())
-                db.session.add(author)
-                db.session.add(anime)
-                db.session.commit()
+                if author:
+                    db.session.add(author)
+                    db.session.commit()
+                    print(titre)
+                    print(filename)
+                    print(nb_episodes)
+                    print(dateS)
+                    print(illustrateur)
+                    print(author.get_id())
+                    anime = Anime(title=titre,img=filename,nbEpisode=nb_episodes,dateS=dateS,illustrator=illustrateur,author_id=author.get_id())
+                    print("proche anime")
+                    if anime:
+                        db.session.add(anime)
+                        db.session.commit()
+                        return redirect(url_for('home'))
 
-
-        return redirect(url_for('home'))
 
     return render_template('anime_form.html', form=f)
