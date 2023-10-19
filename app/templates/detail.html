@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
+<div class="sample">
+    <img id="images" src="{{ url_for('static', filename='img/'+anime.img) }}" alt="{{anime.title}}" title="{{anime.title}}">
+    <ul>
+        <li>Titre: {{ anime.title }}</li>
+        <li>Auteur: {{ anime.author }}</li>
+        <li>Illustrateur: {{ anime.illustrator }}</li>
+        <li>Nombre d'épisodes: {{ anime.nbEpisode }}</li>
+        <li>Date de production: {{ anime.dateS }}</li>
+    </ul>
+
+</div>
+{% endblock %}

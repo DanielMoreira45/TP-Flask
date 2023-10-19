@@ -26,6 +26,7 @@ def loaddb(filename):
                    img = b["img"],
                    nbEpisode = b["nbEpisodes"],
                    dateS= b["datesSortie"],
+                   illustrator = b["illustrator"],
                    author_id = a.id)
         db.session.add(o)
     db.session.commit()

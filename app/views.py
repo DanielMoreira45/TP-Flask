@@ -9,3 +9,9 @@ def home():
         title="My Anime !", 
         animes=get_sample2()
     )
+
+@app.route("/detail/<id>")
+def detail(id):
+    animes = get_sample2()
+    anime = animes[int(id)-1]
+    return render_template("detail.html",anime=anime)
