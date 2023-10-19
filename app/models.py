@@ -15,9 +15,10 @@ i = 0
 for anime in Anime:
     anime['id'] = i
     i += 1
-  
-from .app import db
 
+def get_sample():
+    return Anime[0:15]
+  
 class Author(db.Model):
     __tablename__ = 'author'
     id = db.Column(db.Integer, primary_key=True)
@@ -55,7 +56,7 @@ class User(db.Model, UserMixin):
         return self.username
 
 def get_sample2():
-    return Anime.query.limit(12).all()
+    return Anime.query.limit(15).all()
 
 def get_auteur(id):
     return Author.query.get(id)

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">  <!-- Ajoutez l'attribut enctype pour prendre en charge les fichiers -->
+        {{ form.hidden_tag() }}
+        <p>{{ form.auteur.label }} {{ form.auteur() }}</p>
+        <p>{{ form.illustrateur.label }} {{ form.illustrateur() }}</p>
+        <p>{{ form.nb_episodes.label }} {{ form.nb_episodes() }}</p>
+        <p>{{ form.titre.label }} {{ form.titre() }}</p>
+        <p>{{ form.date_debut.label }} {{ form.date_debut() }}</p>
+        <p>{{ form.date_fin.label }} {{ form.date_fin() }}</p>
+        <p>{{ form.image.label }} {{ form.image() }}</p>
+        <p><input type="submit" value="Soumettre"></p>
+    </form>
+    <script>
+        const dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.style.border = '2px dashed #000';
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.style.border = '2px dashed #ccc';
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.border = '2px dashed #ccc';
+
+            const fileList = e.dataTransfer.files;
+            const fileInput = document.getElementById('fileInput');
+
+            // Update the file input element with the dropped files
+            fileInput.files = fileList;
+        });
+    </script>
+{% endblock %}
+
