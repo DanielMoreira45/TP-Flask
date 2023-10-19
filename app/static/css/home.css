@@ -1,8 +1,10 @@
 h1 {
-    color: red;
-    text-align: center;}
+    color: black;
+    text-align: center;
+    font: italic small-caps bold 40px/2 cursive;
+}
 
-div.sample, div.co{
+div.sample, div.co, div.edit{
  text-align: center;
  margin-left: 30%;
  margin-right: 30%;
@@ -11,10 +13,14 @@ div.sample, div.co{
  background-size: 10%;
 }
 
-.form-control, .btn-default{
+.form-control, .btn-default, .list-group-item{
     text-align: center;
     margin-left: 10%;
     margin-right: 10%;
+}
+
+nav{
+    font: small-caps bold 14px/2 cursive;
 }
 
 main{
@@ -46,4 +52,5 @@ li, ul{
 body{
     background-image: url("../img/fond.jpg");
     background-size: cover;
+    font: small-caps 14px/2 cursive;
 }
